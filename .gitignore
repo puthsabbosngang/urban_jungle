@@ -1,0 +1,12 @@
+# Node.js
+node_modules/
+.env
+dist/
+*.sqlite
+
+# React / Vite
+/frontend/node_modules/
+frontend/dist/
+
+# Optional
+.DS_Store
