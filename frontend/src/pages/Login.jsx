@@ -1,30 +1,27 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { loginUser } from "../services/api/auth";
-import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   async function handleLogin(e) {
     e.preventDefault();
-    const result = await loginUser({email, password})
+    const result = await loginUser({ email, password });
 
-    if (result.token){
-      localStorage.setItem("token", result.token)
-      
-      if (result.user.role === "admin") {
-        navigate("/dashboard")
-      } else{
-        navigate("/products")
-      }
-    }else {
-      alert(result.message || "Login failed please try again!")
+    if (result.token) {
+      login(result.token, result.user); 
+      navigate(result.user.role === "admin" ? "/dashboard" : "/home");
+    } else {
+      alert(result.message || "Login failed. Please try again!");
     }
   }
 
+  
   return (
     <div style={styles.container}>
       <div style={styles.card}>
