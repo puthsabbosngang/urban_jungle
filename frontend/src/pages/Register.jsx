@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { registerUser } from "../services/api/auth";
+import { registerUser } from "../services/api/authAPI";
 import { useNavigate } from "react-router-dom";
+import useTitle from "../hooks/useTitle";
 
 export default function Register() {
   const [name, setName] = useState("");
@@ -9,6 +10,7 @@ export default function Register() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const navigate = useNavigate(); 
+  useTitle("Register");
 
   async function handleRegister(e) {
     e.preventDefault();
@@ -23,61 +25,65 @@ export default function Register() {
   }
 
   return (
-    <div style={styles.container}>
-      <div style={styles.card}>
-        <h2 style={styles.title}>Welcome to Stockify 📦</h2>
-        <p style={styles.subtitle}>Register to create your account</p>
+    <>
+      
+      <div style={styles.container}>
+        <div style={styles.card}>
+          <h2 style={styles.title}>Welcome to Stockify 📦</h2>
+          <p style={styles.subtitle}>Register to create your account</p>
 
-        <form onSubmit={handleRegister} style={styles.form}>
-          <input
-            type="name"
-            placeholder="Username"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            style={styles.input}
-            required
-          />
+          <form onSubmit={handleRegister} style={styles.form}>
+            <input
+              type="name"
+              placeholder="Username"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              style={styles.input}
+              required
+            />
 
-          <input
-            type="email"
-            placeholder="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            style={styles.input}
-            required
-          />
+            <input
+              type="email"
+              placeholder="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              style={styles.input}
+              required
+            />
 
-          <input
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            style={styles.input}
-            required
-          />
+            <input
+              type="password"
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              style={styles.input}
+              required
+            />
 
-          <input
-            type="password"
-            placeholder="Confirm Password"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            style={styles.input}
-            required
-          />
+            <input
+              type="password"
+              placeholder="Confirm Password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              style={styles.input}
+              required
+            />
 
-          <button type="submit" style={styles.button}>
-            Register
-          </button>
-        </form>
+            <button type="submit" style={styles.button}>
+              Register
+            </button>
+          </form>
 
-        <p style={styles.footer}>
-          Already have an account?{" "}
-          <Link to="/login" style={styles.link}>
-            Login here            
-          </Link>
-        </p>
+          <p style={styles.footer}>
+            Already have an account?{" "}
+            <Link to="/login" style={styles.link}>
+              Login here            
+            </Link>
+          </p>
+        </div>
       </div>
-    </div>
+    </>
+
   );
 }
 

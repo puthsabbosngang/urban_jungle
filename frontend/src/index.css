@@ -1,0 +1,22 @@
+/* src/index.css */
+html, body, #root {
+  height: 100%;
+  background: #fff !important;
+  padding: 0;
+  margin: 0;
+}
+
+/* hide scrollbar visually but keep scrolling */
+html, body, #root {
+  -ms-overflow-style: none; /* IE/Edge */
+  scrollbar-width: none;    /* Firefox */
+}
+
+/* Chrome, Safari and Opera */
+html::-webkit-scrollbar,
+body::-webkit-scrollbar,
+#root::-webkit-scrollbar {
+  width: 0px;
+  height: 0px;
+  background: transparent;
+}

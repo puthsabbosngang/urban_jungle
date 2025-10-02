@@ -1,13 +1,16 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { loginUser } from "../services/api/auth";
+import { loginUser } from  "../services/api/authAPI";
 import { useAuth } from "../context/AuthContext";
+import useTitle from "../hooks/useTitle";
+
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const { login } = useAuth();
+  useTitle("Login");
 
   async function handleLogin(e) {
     e.preventDefault();
@@ -15,7 +18,7 @@ export default function Login() {
 
     if (result.token) {
       login(result.token, result.user); 
-      navigate(result.user.role === "admin" ? "/dashboard" : "/home");
+      navigate("/home");
     } else {
       alert(result.message || "Login failed. Please try again!");
     }
@@ -51,7 +54,7 @@ export default function Login() {
             Login
           </button>
         </form>
-
+ 
         <p style={styles.footer}>
           Don’t have an account?{" "}
           <Link to="/register" style={styles.link}>
@@ -68,7 +71,7 @@ const styles = {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    height: "80vh",
+    height: "100vh",
     background: "#f4f6f8",
   },
   card: {

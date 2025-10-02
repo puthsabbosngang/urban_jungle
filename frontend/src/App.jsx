@@ -1,28 +1,28 @@
-import { Routes, Route, Navigate} from "react-router-dom";
-import Navbar from "./components/Navbar";
-import Dashboard from "./pages/Dashboard";
+import { Routes, Route, Navigate } from "react-router-dom";
+import { HelmetProvider } from "react-helmet-async";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import Products from "./pages/Products";
-import Categories from "./pages/Categories";
 import Home from "./pages/Home";
+import Shop from "./pages/Shop";
+import Dashboard from "./pages/Dashboard";
+import User from "./components/dashboard/User"
+import Category from "./components/dashboard/Category";
 
 function App() {
   return (
-    <>
-      <Navbar />
-      <div style={{ padding: "20px" }}>
-        <Routes>
-          <Route path="/" element={<Navigate to="/home" replace /> } />
-          <Route path="/home" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/products" element={<Products />} />
-          <Route path="/categories" element={<Categories />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-        </Routes>
-      </div>
-    </>
+    <HelmetProvider>
+      <Routes>
+        <Route path="/" element={<Navigate to="/home" />} />
+        <Route path="/home" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/shop" element={<Shop />} />
+        <Route path="/dashboard" element={<Dashboard />}> 
+          <Route path="users" element={<User />} />
+          <Route path="categories" element={<Category />} />
+        </Route>
+      </Routes>
+    </HelmetProvider>
   );
 }
 
