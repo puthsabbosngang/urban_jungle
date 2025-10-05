@@ -7,9 +7,9 @@ export default function AdminDashboard() {
       <aside style={styles.sidebar}>
         <h2 style={styles.logo}> Urban Jungle  Admin</h2>
         <nav style={styles.nav}>
-          <Link to="users" style={styles.link}>👤 Users</Link>
-          <Link to="products" style={styles.link}>📦 Products</Link>
           <Link to="categories" style={styles.link}>🗂 Categories</Link>
+          <Link to="products" style={styles.link}>📦 Products</Link>
+          <Link to="users" style={styles.link}>👤 Users</Link>
         </nav>
       </aside>
 

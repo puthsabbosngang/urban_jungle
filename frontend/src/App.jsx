@@ -7,6 +7,7 @@ import Shop from "./pages/Shop";
 import Dashboard from "./pages/Dashboard";
 import User from "./components/dashboard/User"
 import Category from "./components/dashboard/Category";
+import Product from "./components/dashboard/Product";
 
 function App() {
   return (
@@ -18,8 +19,10 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/shop" element={<Shop />} />
         <Route path="/dashboard" element={<Dashboard />}> 
-          <Route path="users" element={<User />} />
           <Route path="categories" element={<Category />} />
+          <Route path="products" element={<Product />} />
+          <Route path="users" element={<User />} />
+          
         </Route>
       </Routes>
     </HelmetProvider>

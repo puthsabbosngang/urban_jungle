@@ -2,24 +2,26 @@ import { useEffect, useState } from "react";
 
 export default function User() {
   const [users, setUsers] = useState([]);
+  const [showAddModal, setShowAddModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
+
+  
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("user");
 
-  const [editing, setEditing] = useState(null); // editing user ID
+  
+  const [editId, setEditId] = useState(null);
   const [editName, setEditName] = useState("");
   const [editEmail, setEditEmail] = useState("");
   const [editRole, setEditRole] = useState("user");
 
-  
   async function fetchUsers() {
     const res = await fetch("http://localhost:5000/api/users");
-    const data = await res.json();
-    setUsers(data);
+    setUsers(await res.json());
   }
 
-  
   async function handleSubmit(e) {
     e.preventDefault();
     await fetch("http://localhost:5000/api/users", {
@@ -32,10 +34,10 @@ export default function User() {
     setEmail("");
     setPassword("");
     setRole("user");
+    setShowAddModal(false);
     fetchUsers();
   }
 
-  
   async function handleDelete(id) {
     if (window.confirm("Are you sure you want to delete this user?")) {
       await fetch(`http://localhost:5000/api/users/${id}`, { method: "DELETE" });
@@ -43,17 +45,17 @@ export default function User() {
     }
   }
 
-  
-  function startEdit(u) {
-    setEditing(u.id);
+  function openEditModal(u) {
+    setEditId(u.id);
     setEditName(u.name);
     setEditEmail(u.email);
     setEditRole(u.role);
+    setShowEditModal(true);
   }
 
-  
-  async function saveEdit(id) {
-    await fetch(`http://localhost:5000/api/users/${id}`, {
+  async function saveEdit(e) {
+    e.preventDefault();
+    await fetch(`http://localhost:5000/api/users/${editId}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -62,8 +64,8 @@ export default function User() {
         role: editRole,
       }),
     });
-
-    setEditing(null);
+    setShowEditModal(false);
+    setEditId(null);
     fetchUsers();
   }
 
@@ -75,46 +77,12 @@ export default function User() {
     <div style={styles.container}>
       <h2 style={styles.title}>👤 Manage Users</h2>
 
-      {/* Add User Form */}
-      <form onSubmit={handleSubmit} style={styles.form}>
-        <input
-          type="text"
-          placeholder="Name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          required
-          style={styles.input}
-        />
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-          style={styles.input}
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-          style={styles.input}
-        />
-        <select
-          value={role}
-          onChange={(e) => setRole(e.target.value)}
-          style={styles.input}
-        >
-          <option value="user">User</option>
-          <option value="admin">Admin</option>
-        </select>
-        <button type="submit" style={styles.btnAdd}>
-          + Add User
-        </button>
-      </form>
+      {/* Add Button */}
+      <button style={styles.btnAdd} onClick={() => setShowAddModal(true)}>
+        + Add User
+      </button>
 
-    
+      {/* Users Table */}
       <div style={styles.tableWrapper}>
         <table style={styles.table}>
           <thead>
@@ -129,84 +97,128 @@ export default function User() {
           <tbody>
             {users.map((u) => (
               <tr key={u.id} style={styles.tr}>
-                <td style={styles.td}>
-                  {editing === u.id ? (
-                    <input
-                      value={editName}
-                      onChange={(e) => setEditName(e.target.value)}
-                      style={styles.input}
-                    />
-                  ) : (
-                    u.name
-                  )}
-                </td>
-                <td style={styles.td}>
-                  {editing === u.id ? (
-                    <input
-                      type="email"
-                      value={editEmail}
-                      onChange={(e) => setEditEmail(e.target.value)}
-                      style={styles.input}
-                    />
-                  ) : (
-                    u.email
-                  )}
-                </td>
-                <td style={styles.td}>
-                  {editing === u.id ? (
-                    <select
-                      value={editRole}
-                      onChange={(e) => setEditRole(e.target.value)}
-                      style={styles.input}
-                    >
-                      <option value="user">User</option>
-                      <option value="admin">Admin</option>
-                    </select>
-                  ) : (
-                    u.role
-                  )}
-                </td>
+                <td style={styles.td}>{u.name}</td>
+                <td style={styles.td}>{u.email}</td>
+                <td style={styles.td}>{u.role}</td>
                 <td style={styles.td}>
                   {new Date(u.created_at).toLocaleString()}
                 </td>
                 <td style={styles.td}>
-                  {editing === u.id ? (
-                    <>
-                      <button
-                        style={styles.btnSave}
-                        onClick={() => saveEdit(u.id)}
-                      >
-                        Save
-                      </button>
-                      <button
-                        style={styles.btnCancel}
-                        onClick={() => setEditing(null)}
-                      >
-                        Cancel
-                      </button>
-                    </>
-                  ) : (
-                    <>
-                      <button
-                        style={styles.btnEdit}
-                        onClick={() => startEdit(u)}
-                      >
-                        Edit
-                      </button>
-                      <button
-                        style={styles.btnDelete}
-                        onClick={() => handleDelete(u.id)}
-                      >
-                        Delete
-                      </button>
-                    </>
-                  )}
+                  <button style={styles.btnEdit} onClick={() => openEditModal(u)}>
+                    Edit
+                  </button>
+                  <button
+                    style={styles.btnDelete}
+                    onClick={() => handleDelete(u.id)}
+                  >
+                    Delete
+                  </button>
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
+
+      {/* Add User Modal */}
+      {showAddModal && (
+        <div style={styles.modalOverlay}>
+          <div style={styles.modal}>
+            <h3>Add New User</h3>
+            <form onSubmit={handleSubmit} style={styles.modalForm}>
+              <input
+                type="text"
+                placeholder="Name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                required
+                style={styles.input}
+              />
+              <input
+                type="email"
+                placeholder="Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                style={styles.input}
+              />
+              <input
+                type="password"
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+                style={styles.input}
+              />
+              <select
+                value={role}
+                onChange={(e) => setRole(e.target.value)}
+                style={styles.input}
+              >
+                <option value="user">User</option>
+                <option value="admin">Admin</option>
+              </select>
+              <div>
+                <button type="submit" style={styles.btnSave}>
+                  Save
+                </button>
+                <button
+                  type="button"
+                  style={styles.btnCancel}
+                  onClick={() => setShowAddModal(false)}
+                >
+                  Cancel
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* Edit User Modal */}
+      {showEditModal && (
+        <div style={styles.modalOverlay}>
+          <div style={styles.modal}>
+            <h3>Edit User</h3>
+            <form onSubmit={saveEdit} style={styles.modalForm}>
+              <input
+                type="text"
+                value={editName}
+                onChange={(e) => setEditName(e.target.value)}
+                required
+                style={styles.input}
+              />
+              <input
+                type="email"
+                value={editEmail}
+                onChange={(e) => setEditEmail(e.target.value)}
+                required
+                style={styles.input}
+              />
+              <select
+                value={editRole}
+                onChange={(e) => setEditRole(e.target.value)}
+                style={styles.input}
+              >
+                <option value="user">User</option>
+                <option value="admin">Admin</option>
+              </select>
+              <div>
+                <button type="submit" style={styles.btnSave}>
+                  Save
+                </button>
+                <button
+                  type="button"
+                  style={styles.btnCancel}
+                  onClick={() => setShowEditModal(false)}
+                >
+                  Cancel
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
@@ -214,18 +226,6 @@ export default function User() {
 const styles = {
   container: { maxWidth: "1000px", margin: "0 auto", padding: "20px" },
   title: { marginBottom: "15px" },
-  form: {
-    display: "flex",
-    gap: "10px",
-    marginBottom: "20px",
-    alignItems: "center",
-    flexWrap: "wrap",
-  },
-  input: {
-    padding: "8px",
-    border: "1px solid #ccc",
-    borderRadius: "6px",
-  },
   btnAdd: {
     padding: "10px 16px",
     background: "#222",
@@ -233,6 +233,7 @@ const styles = {
     border: "none",
     borderRadius: "6px",
     cursor: "pointer",
+    marginBottom: "15px",
   },
   tableWrapper: { overflowX: "auto" },
   table: {
@@ -263,7 +264,7 @@ const styles = {
     cursor: "pointer",
   },
   btnSave: {
-    padding: "6px 10px",
+    padding: "8px 14px",
     marginRight: "8px",
     border: "none",
     borderRadius: "4px",
@@ -272,11 +273,38 @@ const styles = {
     cursor: "pointer",
   },
   btnCancel: {
-    padding: "6px 10px",
+    padding: "8px 14px",
     border: "none",
     borderRadius: "4px",
     background: "#6c757d",
     color: "#fff",
     cursor: "pointer",
+  },
+  modalOverlay: {
+    position: "fixed",
+    top: 0, left: 0,
+    width: "100%", height: "100%",
+    backgroundColor: "rgba(0,0,0,0.5)",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  modal: {
+    background: "#fff",
+    padding: "20px",
+    borderRadius: "8px",
+    width: "400px",
+    boxShadow: "0 2px 10px rgba(0,0,0,0.2)",
+  },
+  modalForm: {
+    display: "flex",
+    flexDirection: "column",
+    gap: "10px",
+    marginTop: "10px",
+  },
+  input: {
+    padding: "8px",
+    border: "1px solid #ccc",
+    borderRadius: "6px",
   },
 };
