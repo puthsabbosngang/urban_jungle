@@ -1,7 +1,7 @@
-# 📦 Stockify – Product Catalog Management App
+# 🌿 Urban Jungle – Product Catalog Management App
 
-Stockify is a **full-stack product catalog web application** designed to demonstrate authentication, authorization (roles & permissions), and CRUD operations.  
-It allows users to browse categories and products, while admins can manage users, categories, and products.
+Urban Jungle is a **full-stack product catalog web application** built to showcase authentication, authorization (roles & permissions), and complete CRUD functionality.
+It enables users to explore categories and products, while admins can efficiently manage users, categories, and products.
 
 ---
 
