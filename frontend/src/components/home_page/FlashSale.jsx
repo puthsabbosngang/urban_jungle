@@ -48,7 +48,7 @@ const flashsaleStyle = {
     left: 0,
     width: "100%",
     height: "100%",
-    backgroundColor: "rgba(0, 0, 0, 0.5)", // dark transparent overlay
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
     zIndex: 1,
   },
 
@@ -65,11 +65,11 @@ const flashsaleStyle = {
     letterSpacing: "2px",
     textTransform: "uppercase",
     marginBottom: "50px",
-    color: "#fff", // light green
+    color: "#fff", 
   },
 
   title: {
-    fontSize: "clamp(18px, 4vw, 38px)", // responsive scaling
+    fontSize: "clamp(18px, 4vw, 38px)",
     fontWeight: "bold",
     lineHeight: "1.2",
     marginBottom: "50px",

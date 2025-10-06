@@ -94,7 +94,6 @@ export default function Product() {
         + Add Product
       </button>
 
-      {/* Products Table */}
       <div style={styles.tableWrapper}>
         <table style={styles.table}>
           <thead>
@@ -144,7 +143,6 @@ export default function Product() {
         </table>
       </div>
 
-      {/* Modal */}
       {modalOpen && (
         <div style={styles.modalOverlay}>
           <div style={styles.modal}>

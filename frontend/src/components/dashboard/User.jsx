@@ -77,12 +77,10 @@ export default function User() {
     <div style={styles.container}>
       <h2 style={styles.title}>👤 Manage Users</h2>
 
-      {/* Add Button */}
       <button style={styles.btnAdd} onClick={() => setShowAddModal(true)}>
         + Add User
       </button>
 
-      {/* Users Table */}
       <div style={styles.tableWrapper}>
         <table style={styles.table}>
           <thead>
@@ -120,7 +118,6 @@ export default function User() {
         </table>
       </div>
 
-      {/* Add User Modal */}
       {showAddModal && (
         <div style={styles.modalOverlay}>
           <div style={styles.modal}>
@@ -175,7 +172,6 @@ export default function User() {
         </div>
       )}
 
-      {/* Edit User Modal */}
       {showEditModal && (
         <div style={styles.modalOverlay}>
           <div style={styles.modal}>

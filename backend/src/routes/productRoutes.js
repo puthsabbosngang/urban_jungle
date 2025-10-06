@@ -51,7 +51,6 @@ router.post("/", upload.single("img"), async (req, res) => {
   }
 });
 
-// PUT update product
 router.put("/:id", upload.single("img"), async (req, res) => {
   try {
     const { category_id, name, quantity, instock, description } = req.body;
@@ -81,7 +80,7 @@ router.put("/:id", upload.single("img"), async (req, res) => {
   }
 });
 
-// DELETE product
+
 router.delete("/:id", async (req, res) => {
   try {
     const db = await openDB();

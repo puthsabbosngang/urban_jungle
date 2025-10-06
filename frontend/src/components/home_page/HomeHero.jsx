@@ -49,7 +49,7 @@ const homeHeroStyle = {
     left: 0,
     width: "100%",
     height: "100%",
-    backgroundColor: "rgba(0, 0, 0, 0.5)", // dark transparent overlay
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
     zIndex: 1,
   },
 
@@ -66,11 +66,11 @@ const homeHeroStyle = {
     letterSpacing: "2px",
     textTransform: "uppercase",
     marginBottom: "16px",
-    color: "#fff", // light green
+    color: "#fff",
   },
 
   title: {
-    fontSize: "clamp(28px, 5vw, 48px)", // responsive scaling
+    fontSize: "clamp(28px, 5vw, 48px)",
     fontWeight: "bold",
     lineHeight: "1.2",
     marginBottom: "24px",
@@ -89,6 +89,6 @@ const homeHeroStyle = {
   },
 
   buttonHover: {
-    backgroundColor: "#45a049", // slightly darker green
+    backgroundColor: "#45a049",
   },
 };

@@ -1,5 +1,5 @@
 import React from "react";
-import premierImg from "../../assets/premier.jpg"; // replace with your actual image path
+import premierImg from "../../assets/premier.jpg";
 
 export default function HomePremier() {
   return (

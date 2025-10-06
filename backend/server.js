@@ -1,11 +1,11 @@
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
-import bcrypt from "bcrypt";
 import authRoutes from "./src/routes/authRoutes.js";
 import userRoutes from "./src/routes/userRoutes.js";
 import categoryRoutes from "./src/routes/categoryRoutes.js"; 
 import productRoutes from "./src/routes/productRoutes.js"
+import dashboardRoutes from "./src/routes/dashboardRoutes.js"
 import { authenticateToken } from "./src/middleware/authToken.js";
 
 dotenv.config();
@@ -26,6 +26,7 @@ app.get("/api/auth/me", authenticateToken, (req, res) => {
 app.use("/api/users", userRoutes);
 app.use("/api/categories", categoryRoutes);
 app.use("/api/products", productRoutes);
+app.use("/api/dashboards", dashboardRoutes);
 
 app.listen(PORT, () => {
   console.log(`🚀 Server running at http://localhost:${PORT}`);
