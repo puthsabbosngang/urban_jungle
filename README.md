@@ -24,9 +24,5 @@ It enables users to explore categories and products, while admins can efficientl
 **Backend:** Node.js, Express.js, SQLite, JWT, bcrypt  
 **Frontend:** React.js, React Router, Axios, Vite  
 **Database:** SQLite  
-**Version Control:** Git, GitHub  
-
----
-
-## 📁 Project Structure (Planned)
+**Version Control:** Git, GitHub 
 
